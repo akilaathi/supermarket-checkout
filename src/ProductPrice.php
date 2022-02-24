@@ -3,22 +3,22 @@
 namespace App;
 
 class ProductPrice {
-    private $singlePrice;
-    private $discounts;
+    private $sPrice;
+    private $discnts;
 
-    public function __construct($singlePrice, $discounts = [])
+    public function __construct($sPrice, $discnts = [])
     {
-        $this->singlePrice = $singlePrice;
+        $this->sPrice = $sPrice;
 
-        $this->discounts =
-            $discounts instanceof ProductDiscount ?
-            [$discounts] : $discounts;
+        $this->discnts =
+            $discnts instanceof ProductDiscount ?
+            [$discnts] : $discnts;
     }
 
     public function priceFor($count)
     {
         $discount = $this->_getDiscountByCount($count);
-        $price    = $count * $this->singlePrice;
+        $price    = $count * $this->sPrice;
 
         if ($discount)
             $price -= $discount->discountFor($count);
@@ -30,7 +30,7 @@ class ProductPrice {
     {
         $memoDiscount = null;
 
-        foreach ($this->discounts as $discount) {
+        foreach ($this->discnts as $discount) {
             if ($count >= $discount->getProductsCount()) {
                 $memoDiscount = $discount;
             }

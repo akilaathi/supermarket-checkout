@@ -3,22 +3,22 @@
 namespace App;
 
 class Checkout {
-    private $pricingRules = [];
-    private $itemsCounts  = [];
-    private $itemsPrices  = [];
+    private $pRules = [];
+    private $icnt  = [];
+    private $iprice  = [];
 
-    public function __construct($itemsStr, $pricingRules)
+    public function __construct($itemsStr, $pRules)
     {
-        $this->pricingRules = $pricingRules;
+        $this->pRules = $pRules;
 
-        foreach ($this->pricingRules as $type => $productPrice) {
-            $this->itemsCounts[$type]  = substr_count($itemsStr, $type);
-            $this->itemsPrices[$type]  = $productPrice->priceFor($this->itemsCounts[$type]);
+        foreach ($this->pRules as $type => $productPrice) {
+            $this->icnt[$type]  = substr_count($itemsStr, $type);
+            $this->iprice[$type]  = $productPrice->priceFor($this->icnt[$type]);
         }
     }
 
     public function total()
     {
-        return array_sum($this->itemsPrices);
+        return array_sum($this->iprice);
     }
 }
